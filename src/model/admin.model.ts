@@ -30,6 +30,11 @@ const adminSchema = new mongoose.Schema({
     minLength: [6, "Password more than 6 character."],
     maxLength: [50, "Password must be less than 50 character."],
   },
+  staff: [
+    {
+      type: mongoose.Schema.ObjectId,
+    },
+  ],
 });
 
 const AdminRegister = mongoose.model("Admin", adminSchema);
