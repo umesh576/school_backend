@@ -3,7 +3,7 @@ import Admin from "../model/admin.model";
 import CustomError from "../middleware/customErrorHandle.middleware";
 
 export const addAdmin = async (req: Request, res: Response) => {
-  const { email, password, firstName, lastName, role, adminId } = req.body;
+  const { firstName, lastName, role, email, password, adminId } = req.body;
 
   if (!email || !password || !firstName || !lastName || !adminId) {
     throw new CustomError("Required all necessary details.", 404);
