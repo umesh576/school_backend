@@ -40,6 +40,11 @@ const adminSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Id must be required for admin."],
     },
+    workAccess: [
+      {
+        type: String,
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -21,7 +21,18 @@ export const addAdmin = async (req: Request, res: Response) => {
     throw new CustomError("This id is already given.", 404);
   }
 
-  const admin = await Admin.create();
+  const admin = await Admin.create({
+    email,
+    password,
+    firstName,
+    lastName,
+    role,
+    adminId,
+  });
+
+  if (!admin) {
+    throw new CustomError("Admin not created.", 500);
+  }
 
   res.status(200).json({
     messgae: "New admin created sucessfully.",
