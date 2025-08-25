@@ -29,7 +29,7 @@ const adminSchema = new mongoose.Schema(
     password: {
       type: String,
       minLength: [6, "Password more than 6 character."],
-      maxLength: [50, "Password must be less than 50 character."],
+      maxLength: [100, "Password must be less than 50 character."],
     },
     staff: [
       {
@@ -45,6 +45,14 @@ const adminSchema = new mongoose.Schema(
         type: String,
       },
     ],
+    gender: {
+      type: String,
+      required: [true, "Gender required."],
+    },
+    phoneNumber: {
+      type: String,
+      required: [true, "Phonenumber required."],
+    },
   },
   { timestamps: true }
 );

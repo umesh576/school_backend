@@ -10,6 +10,9 @@ const DB_URI = process.env.DB_URI || "";
 
 ConnectDatabase(DB_URI);
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/api/admin", AdminWork);
 
 app.listen(PORT, () => {
