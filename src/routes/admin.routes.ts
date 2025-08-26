@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { addAdmin } from "../controller/admin.controller";
+import { adminLogin, adminRegister } from "../controller/admin.controller";
 import multer from "multer";
 
 const upload = multer({ storage: multer.diskStorage({}) });
 const server = Router();
 
-server.post("/register", upload.single("profilePicture"), addAdmin);
-
+server.post("/register", upload.single("profilePicture"), adminRegister);
+server.post("/login", adminLogin);
 export default server;
