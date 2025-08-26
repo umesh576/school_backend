@@ -11,7 +11,6 @@ cloudinary.config({
 export const uploadFile = async (filePath: string) => {
   try {
     const result = await cloudinary.uploader.upload(filePath);
-    console.log(result.secure_url);
     return { url: result.secure_url, publicId: result.public_id }; // ✅ return only URL
   } catch (error: any) {
     console.error(error);
