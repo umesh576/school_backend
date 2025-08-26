@@ -1,25 +1,21 @@
+// routes/cloudinary.routes.ts
 import { Router } from "express";
-import { uploadCloudinary } from "../controller/cloudinary.controller";
-
+import {
+  deleteCloudinarySingle,
+  updateCloudinaryFile,
+  uploadCloudinary,
+} from "../controller/cloudinary.controller";
 import multer from "multer";
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "/tmp/");
-//   },
-//   filename: function (req, file, cb) {
-//     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-//     cb(null, file.fieldname + "-" + uniqueSuffix);
-//   },
-// });
 
 const upload = multer({
   storage: multer.diskStorage({}),
-  limits: { fileSize: 50000 },
+  limits: { fileSize: 5 * 1024 * 1024 }, // ✅ 5MB
 });
 
 const server = Router();
 
-server.post("/cloudinary", upload.single("file"), uploadCloudinary);
+server.post("/cloudinary", upload.single("image"), uploadCloudinary);
+server.delete("/delete", deleteCloudinarySingle);
+server.put("/:publicId", upload.single("image"), updateCloudinaryFile);
 
 export default server;
