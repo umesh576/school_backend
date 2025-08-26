@@ -2,7 +2,7 @@ import express from "express";
 import ConnectDatabase from "./config/DatabaseConnect.config";
 import AdminWork from "./routes/admin.routes";
 import "dotenv/config";
-
+import "./config/Cloudinary.config";
 const app = express();
 
 const PORT = process.env.PORT || 5000;
