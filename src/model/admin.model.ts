@@ -3,7 +3,7 @@ import { Counter } from "./counter.model";
 
 const emailRegex = /^\S+@\S+\.\S+$/;
 
-const adminSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -65,11 +65,11 @@ const adminSchema = new mongoose.Schema(
 );
 
 // Pre-save hook to generate adminId
-adminSchema.pre("save", async function (next) {
+userSchema.pre("save", async function (next) {
   if (this.isNew) {
     // 1. Get the counter for students
     const counter = await Counter.findOneAndUpdate(
-      { id: "adminId" },
+      { id: "UserId" },
       { $inc: { seq: 1 } },
       { new: true, upsert: true } // create if not exists
     );
@@ -77,12 +77,12 @@ adminSchema.pre("save", async function (next) {
     // 2. Generate the studentId: e.g., STU2025-001
     const year = new Date().getFullYear();
     const paddedSeq = String(counter.seq).padStart(3, "0"); // 1 -> 001
-    this.adminId = `ADM${year}-${paddedSeq}`;
+    this.adminId = `USER${year}-${paddedSeq}`;
   }
 
   next();
 });
 
-const Admin = mongoose.model("Admin", adminSchema);
+const User = mongoose.model("USER", userSchema);
 
-export default Admin;
+export default User;
