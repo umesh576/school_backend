@@ -10,6 +10,6 @@ export const generateWebToken = (payload: IPayload) => {
   }
 
   return jwt.sign(payload, JWT_SECRET_TOKEN, {
-    expiresIn: JWT_TOKEN_EXPIRES,
+    expiresIn: JWT_TOKEN_EXPIRES as string,
   });
 };
