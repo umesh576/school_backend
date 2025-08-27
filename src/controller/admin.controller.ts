@@ -105,14 +105,21 @@ export const adminLogin = async (req: Request, res: Response) => {
 
   const token = generateWebToken(payload);
   console.log(token);
-  res.status(200).json({
-    messgae: "User Login sucessfully.",
-    status: "success",
-    statusCode: 200,
-    success: true,
-    data: admin,
-    token,
-  });
+
+  res
+    .cookie("access_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    })
+    .status(200)
+    .json({
+      messgae: "User Login sucessfully.",
+      status: "success",
+      statusCode: 200,
+      success: true,
+      data: admin,
+      token,
+    });
   // } catch (error) {
   //   res.status(400).json({
   //     message: "Request Failed! Something went wrong.",
