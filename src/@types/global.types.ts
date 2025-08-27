@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export enum Role {
-  superAdmin = "SUPERADMIN",
+  superAdmin = "superAdmin",
   managment = "management",
   staff = "STAFF",
   student = "STUDENT",

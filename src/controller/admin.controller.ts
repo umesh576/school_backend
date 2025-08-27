@@ -85,7 +85,7 @@ export const adminLogin = async (req: Request, res: Response) => {
     throw new CustomError("user doesnt exists.", 404);
   }
 
-  console.log(admin);
+  // console.log(admin);
   const adminpassword = admin.password || "";
 
   const isMatch = await comparePassword(adminpassword, password);
@@ -103,13 +103,15 @@ export const adminLogin = async (req: Request, res: Response) => {
     role: admin.role,
   };
 
-  const token = await generateWebToken(payload);
+  const token = generateWebToken(payload);
+  console.log(token);
   res.status(200).json({
     messgae: "User Login sucessfully.",
     status: "success",
     statusCode: 200,
     success: true,
     data: admin,
+    token,
   });
   // } catch (error) {
   //   res.status(400).json({
