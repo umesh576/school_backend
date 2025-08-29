@@ -130,49 +130,49 @@ export const adminLogin = async (req: Request, res: Response) => {
   // }
 };
 
-// export const staffLogin = async (req: Request, res: Response) => {
-//   const { email, password } = req.body;
+export const staffLogin = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
 
-//   if (!email || !password) {
-//     throw new CustomError("Email and password required.", 404);
-//   }
-//   const staff = await User.findOne([email]);
-//   if (!staff) {
-//     throw new CustomError("Staff not exists", 404);
-//   }
+  if (!email || !password) {
+    throw new CustomError("Email and password required.", 404);
+  }
+  const staff = await User.findOne([email]);
+  if (!staff) {
+    throw new CustomError("Staff not exists", 404);
+  }
 
-//   const staffPassword = staff.password || "";
-//   if (staff.role === Role.staff) {
-//     throw new CustomError("You are not Staff to login here", 404);
-//   }
-//   const isMatched = comparePassword(password, staffPassword);
+  const staffPassword = staff.password || "";
+  if (staff.role === Role.staff) {
+    throw new CustomError("You are not Staff to login here", 404);
+  }
+  const isMatched = comparePassword(password, staffPassword);
 
-//   if (!isMatched) {
-//     throw new CustomError("Password doesnot matched", 404);
-//   }
+  if (!isMatched) {
+    throw new CustomError("Password doesnot matched", 404);
+  }
 
-//   const payload: IPayload = {
-//     firstName: staff.firstName,
-//     lastName: staff.lastName,
-//     email: staff.email,
-//     _id: staff._id,
-//     role: Role.staff,
-//   };
+  const payload: IPayload = {
+    firstName: staff.firstName,
+    lastName: staff.lastName,
+    email: staff.email,
+    _id: staff._id,
+    role: Role.staff,
+  };
 
-//   const token = generateWebToken(payload);
+  const token = generateWebToken(payload);
 
-//   res
-//     .cookie("access_token", token, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production",
-//     })
-//     .status(200)
-//     .json({
-//       messgae: "User Login sucessfully.",
-//       status: "success",
-//       statusCode: 200,
-//       success: true,
-//       data: staff,
-//       token: token,
-//     });
-// };
+  res
+    .cookie("access_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    })
+    .status(200)
+    .json({
+      messgae: "User Login sucessfully.",
+      status: "success",
+      statusCode: 200,
+      success: true,
+      data: staff,
+      token: token,
+    });
+};
