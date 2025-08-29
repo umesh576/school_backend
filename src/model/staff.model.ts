@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Counter } from "./counter.model";
+import { Role } from "../@types/global.types";
 const emailRegex = /^\S+@\S+\.\S+$/;
 const staffSchema = new mongoose.Schema(
   {
@@ -17,8 +18,8 @@ const staffSchema = new mongoose.Schema(
     },
     role: {
       type: String,
+      default: Role.staff,
       required: [true, "Role must be required of admin."],
-      default: "Admin",
     },
     email: {
       type: String,
@@ -31,14 +32,9 @@ const staffSchema = new mongoose.Schema(
       minLength: [6, "Password more than 6 character."],
       maxLength: [100, "Password must be less than 50 character."],
     },
-    staff: [
-      {
-        type: mongoose.Schema.ObjectId,
-      },
-    ],
+
     staffId: {
       type: String,
-      required: [true, "Id must be required for admin."],
       unique: true,
     },
     workAccess: [

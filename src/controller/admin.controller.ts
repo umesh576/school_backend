@@ -29,7 +29,7 @@ export const adminRegister = async (req: Request, res: Response) => {
     const checkAlredyExists = await Admin.findOne({ email });
 
     if (checkAlredyExists) {
-      throw new CustomError("User is alredy exists with this email.", 400);
+      throw new CustomError("Admin is alredy exists with this email.", 400);
     }
 
     const checkByIdAdmin = await Admin.findOne({ adminId });
