@@ -36,7 +36,7 @@ const staffSchema = new mongoose.Schema(
         type: mongoose.Schema.ObjectId,
       },
     ],
-    adminId: {
+    staffId: {
       type: String,
       required: [true, "Id must be required for admin."],
       unique: true,
@@ -76,7 +76,7 @@ staffSchema.pre("save", async function (next) {
     // 2. Generate the studentId: e.g., STU2025-001
     const year = new Date().getFullYear();
     const paddedSeq = String(counter.seq).padStart(3, "0"); // 1 -> 001
-    this.adminId = `STAFF${year}-${paddedSeq}`;
+    this.staffId = `STAFF${year}-${paddedSeq}`;
   }
 
   next();
