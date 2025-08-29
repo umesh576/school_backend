@@ -136,7 +136,8 @@ export const staffLogin = async (req: Request, res: Response) => {
   if (!email || !password) {
     throw new CustomError("Email and password required.", 404);
   }
-  const staff = await User.findOne([email]);
+  const staff = await User.findOne({ email });
+  console.log(staff);
   if (!staff) {
     throw new CustomError("Staff not exists", 404);
   }

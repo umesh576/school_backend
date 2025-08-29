@@ -10,6 +10,6 @@ const upload = multer({ storage: multer.diskStorage({}) });
 const server = Router();
 
 server.post("/register", upload.single("profilePicture"), adminRegister);
-server.post("/admin/login", adminLogin);
-server.post("/staff/login", staffLogin);
+server.post("/login", adminLogin);
+server.post("/login", staffLogin);
 export default server;

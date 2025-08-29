@@ -3,7 +3,7 @@ import { Counter } from "./counter.model";
 
 const emailRegex = /^\S+@\S+\.\S+$/;
 
-const userSchema = new mongoose.Schema(
+const adminSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -19,12 +19,12 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      required: [true, "Role must be required of user."],
+      required: [true, "Role must be required of admin."],
       default: "Admin",
     },
     email: {
       type: String,
-      required: [true, "Email required for user."],
+      required: [true, "Email required for admin."],
       match: emailRegex,
       unique: true,
     },
@@ -65,7 +65,7 @@ const userSchema = new mongoose.Schema(
 );
 
 // Pre-save hook to generate adminId
-userSchema.pre("save", async function (next) {
+adminSchema.pre("save", async function (next) {
   if (this.isNew) {
     // 1. Get the counter for students
     const counter = await Counter.findOneAndUpdate(
@@ -83,6 +83,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-const User = mongoose.model("USER", userSchema);
+const Admin = mongoose.model("USER", adminSchema);
 
-export default User;
+export default Admin;
