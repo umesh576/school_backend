@@ -7,50 +7,58 @@ import { generateWebToken } from "../utils/jwt.utils";
 import { uploadFile } from "../config/Cloudinary.config";
 
 export const staffRegistration = async (req: Request, res: Response) => {
-  const profilePicture = req.file?.path;
-  console.log(req.body);
-  const {
-    firstName,
-    lastName,
-    role,
-    email,
-    password,
-    staffId,
-    gender,
-    phoneNumber,
-    workAccess,
-  } = req.body;
-  if (!email || !password || !firstName || !lastName) {
-    throw new CustomError("Required all necessary details.", 404);
+  try {
+    const profilePicture = req.file?.path;
+    console.log(req.body);
+    const {
+      firstName,
+      lastName,
+      role,
+      email,
+      password,
+      staffId,
+      gender,
+      phoneNumber,
+      workAccess,
+    } = req.body;
+    if (!email || !password || !firstName || !lastName) {
+      throw new CustomError("Required all necessary details.", 404);
+    }
+
+    const checkStaff = await Staff.findOne({ email });
+    if (checkStaff) {
+      throw new CustomError("Staff already exists with this Email.", 404);
+    }
+    const newPassword = await hashPassword(password);
+
+    const fileUrl = await uploadFile(String(profilePicture));
+    const admin = await Staff.create({
+      email,
+      password: newPassword,
+      firstName,
+      lastName,
+      role,
+      staffId,
+      gender,
+      phoneNumber,
+      workAccess,
+      profilePicture: fileUrl,
+    });
+
+    res.status(200).json({
+      messgae: "New admin created sucessfully.",
+      status: "success",
+      statusCode: 200,
+      success: true,
+      data: admin,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      message: "Something went wrong!",
+      status: 400,
+      success: false,
+    });
   }
-
-  const checkStaff = await Staff.findOne({ email });
-  if (checkStaff) {
-    throw new CustomError("Staff already exists with this Email.", 404);
-  }
-  const newPassword = await hashPassword(password);
-
-  const fileUrl = await uploadFile(String(profilePicture));
-  const admin = await Staff.create({
-    email,
-    password: newPassword,
-    firstName,
-    lastName,
-    role,
-    staffId,
-    gender,
-    phoneNumber,
-    workAccess,
-    profilePicture: fileUrl,
-  });
-
-  res.status(200).json({
-    messgae: "New admin created sucessfully.",
-    status: "success",
-    statusCode: 200,
-    success: true,
-    data: admin,
-  });
 };
 
 export const staffLogin = async (req: Request, res: Response) => {
@@ -66,7 +74,7 @@ export const staffLogin = async (req: Request, res: Response) => {
   }
 
   const staffPassword = staff.password || "";
-  if (staff.role === Role.staff) {
+  if (staff.role !== Role.staff) {
     throw new CustomError("You are not Staff to login here", 404);
   }
   const isMatched = comparePassword(password, staffPassword);

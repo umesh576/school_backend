@@ -4,9 +4,9 @@ import multer, { diskStorage } from "multer";
 
 const upload = multer({ storage: diskStorage({}) });
 
-const server = Router();
+const router = Router();
 
-server.post("/register", upload.single("profilePicture"), staffRegistration);
-server.post("login", staffLogin);
+router.post("/register", upload.single("profilePicture"), staffRegistration);
+router.post("/login", staffLogin);
 
-export default server;
+export default router;

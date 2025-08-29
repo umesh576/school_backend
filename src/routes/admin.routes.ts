@@ -3,9 +3,9 @@ import { adminLogin, adminRegister } from "../controller/admin.controller";
 import multer from "multer";
 
 const upload = multer({ storage: multer.diskStorage({}) });
-const server = Router();
+const router = Router();
 
-server.post("/register", upload.single("profilePicture"), adminRegister);
-server.post("/login", adminLogin);
-// server.post("/login", staffLogin);
-export default server;
+router.post("/register", upload.single("profilePicture"), adminRegister);
+router.post("/login", adminLogin);
+// router.post("/login", staffLogin);
+export default router;

@@ -32,9 +32,9 @@ export const adminRegister = async (req: Request, res: Response) => {
       throw new CustomError("Admin is alredy exists with this email.", 400);
     }
 
-    const checkByIdAdmin = await Admin.findOne({ adminId });
+    const checkAdmin = await Admin.findOne({ adminId });
 
-    if (checkByIdAdmin) {
+    if (checkAdmin) {
       throw new CustomError("This id is already given.", 404);
     }
 
@@ -82,10 +82,9 @@ export const adminLogin = async (req: Request, res: Response) => {
   const admin = await Admin.findOne({ email });
 
   if (!admin || admin.role !== Role.superAdmin) {
-    throw new CustomError("user doesnt exists.", 404);
+    throw new CustomError("Admin doesnt exists with this data.", 404);
   }
 
-  // console.log(admin);
   const adminpassword = admin.password || "";
 
   const isMatch = await comparePassword(adminpassword, password);
