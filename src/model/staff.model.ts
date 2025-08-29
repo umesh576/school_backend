@@ -1,7 +1,85 @@
 import mongoose from "mongoose";
-
-const staffSchema = new mongoose.Schema({});
+import { Counter } from "./counter.model";
+const emailRegex = /^\S+@\S+\.\S+$/;
+const staffSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: [true, "Firstname is required."],
+      minLength: [3, "Firstname must me more that 3 character."],
+      maxLength: [50, "Firstname must be less than 50 character."],
+    },
+    lastName: {
+      type: String,
+      required: [true, "Lastname is required."],
+      minLength: [3, "Lastname must me more that 3 character."],
+      maxLength: [50, "Lastname must be less than 50 character."],
+    },
+    role: {
+      type: String,
+      required: [true, "Role must be required of admin."],
+      default: "Admin",
+    },
+    email: {
+      type: String,
+      required: [true, "Email required for admin."],
+      match: emailRegex,
+      unique: true,
+    },
+    password: {
+      type: String,
+      minLength: [6, "Password more than 6 character."],
+      maxLength: [100, "Password must be less than 50 character."],
+    },
+    staff: [
+      {
+        type: mongoose.Schema.ObjectId,
+      },
+    ],
+    adminId: {
+      type: String,
+      required: [true, "Id must be required for admin."],
+      unique: true,
+    },
+    workAccess: [
+      {
+        type: String,
+      },
+    ],
+    gender: {
+      type: String,
+      required: [true, "Gender required."],
+    },
+    phoneNumber: {
+      type: String,
+      required: [true, "Phonenumber required."],
+    },
+    profilePicture: {
+      type: Object,
+      required: [true, "Profile pictue is required. "],
+    },
+  },
+  { timestamps: true }
+);
 
 const Staff = mongoose.model("staff", staffSchema);
+// Pre-save hook to generate adminId
+staffSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    // 1. Get the counter for students
+    const counter = await Counter.findOneAndUpdate(
+      { id: "staffId" },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true } // create if not exists
+    );
+
+    // 2. Generate the studentId: e.g., STU2025-001
+    const year = new Date().getFullYear();
+    const paddedSeq = String(counter.seq).padStart(3, "0"); // 1 -> 001
+    this.adminId = `STAFF${year}-${paddedSeq}`;
+  }
+
+  next();
+});
 
 export default Staff;
