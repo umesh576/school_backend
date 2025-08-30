@@ -61,7 +61,8 @@ export const studentLogin = async (req: Request, res: Response) => {
     throw new CustomError("Student not exixts with email.", 404);
   }
   const stdPassword = student.password || "";
-  const verifyPassword = await comparePassword(password, stdPassword);
+  const verifyPassword = await comparePassword(stdPassword, password);
+  console.log(verifyPassword);
   if (!verifyPassword) {
     throw new CustomError("Password not match.", 404);
   }
@@ -74,7 +75,7 @@ export const studentLogin = async (req: Request, res: Response) => {
     role: Role.student,
   };
 
-  const token = await generateWebToken(payload);
+  const token = generateWebToken(payload);
   res
     .cookie("access_token", token, {
       httpOnly: true,
