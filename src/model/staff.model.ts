@@ -8,13 +8,13 @@ const staffSchema = new mongoose.Schema(
       type: String,
       required: [true, "Firstname is required."],
       minLength: [3, "Firstname must me more that 3 character."],
-      maxLength: [50, "Firstname must be less than 50 character."],
+      maxLength: [30, "Firstname must be less than 30 character."],
     },
     lastName: {
       type: String,
       required: [true, "Lastname is required."],
       minLength: [3, "Lastname must me more that 3 character."],
-      maxLength: [50, "Lastname must be less than 50 character."],
+      maxLength: [30, "Lastname must be less than 50 character."],
     },
     role: {
       type: String,
