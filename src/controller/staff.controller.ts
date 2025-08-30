@@ -9,11 +9,10 @@ import { uploadFile } from "../config/Cloudinary.config";
 export const staffRegistration = async (req: Request, res: Response) => {
   try {
     const profilePicture = req.file?.path;
-    console.log(req.body);
     const {
       firstName,
       lastName,
-      role,
+
       email,
       password,
       staffId,
@@ -37,7 +36,6 @@ export const staffRegistration = async (req: Request, res: Response) => {
       password: newPassword,
       firstName,
       lastName,
-      role,
       staffId,
       gender,
       phoneNumber,

@@ -42,14 +42,22 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: [true, "Gender required."],
     },
-    phoneNumber: {
-      type: String,
-      required: [true, "Phonenumber required."],
-    },
+    phoneNumber: [
+      {
+        type: String,
+        required: [true, "Phonenumber required."],
+      },
+    ],
     profilePicture: {
       type: Object,
       required: [true, "Profile pictue is required. "],
     },
+    record: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "studentRecord",
+      },
+    ],
   },
   { timestamps: true }
 );
