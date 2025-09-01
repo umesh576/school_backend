@@ -52,7 +52,6 @@ const staffSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: Object,
-      required: [true, "Profile pictue is required. "],
     },
   },
   { timestamps: true }
