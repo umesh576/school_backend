@@ -93,7 +93,7 @@ export const studentLogin = async (req: Request, res: Response) => {
 };
 
 export const getStudentById = async (req: Request, res: Response) => {
-  const { studentId } = req.body;
+  const studentId = req.params.id;
 
   if (!studentId) {
     throw new CustomError("Student Fetched sucessfully.", 404);
