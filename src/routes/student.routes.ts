@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  getStudentById,
   studentLogin,
   studentregistration,
 } from "../controller/student.controller";
@@ -10,5 +11,5 @@ const router = Router();
 
 router.post("/register", upload.single("profilePicture"), studentregistration);
 router.post("/login", studentLogin);
-
+router.get("/:id", getStudentById);
 export default router;
