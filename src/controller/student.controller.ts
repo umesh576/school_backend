@@ -91,3 +91,20 @@ export const studentLogin = async (req: Request, res: Response) => {
       token: token,
     });
 };
+
+export const getStudentById = async (req: Request, res: Response) => {
+  const { studentId } = req.body;
+
+  if (!studentId) {
+    throw new CustomError("Student Fetched sucessfully.", 404);
+  }
+
+  const student = await Student.findById(studentId);
+
+  res.status(200).json({
+    status: "sccuess",
+    message: "Student Fetch Sucessfully",
+    success: true,
+    data: student,
+  });
+};
