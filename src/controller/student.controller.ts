@@ -5,6 +5,7 @@ import { comparePassword, hashPassword } from "../utils/bcrypt.utils";
 import { uploadFile } from "../config/Cloudinary.config";
 import { IPayload, Role } from "../@types/global.types";
 import { generateWebToken } from "../utils/jwt.utils";
+import asyncHandler from "express-async-handler";
 
 export const studentregistration = async (req: Request, res: Response) => {
   const profilePicture = req.file?.path;
@@ -92,38 +93,42 @@ export const studentLogin = async (req: Request, res: Response) => {
     });
 };
 
-export const getStudentById = async (req: Request, res: Response) => {
-  const studentId = req.params.id;
+export const getStudentById = asyncHandler(
+  async (req: Request, res: Response) => {
+    const studentId = req.params.id;
 
-  if (!studentId) {
-    throw new CustomError("Student Fetched sucessfully.", 404);
-  }
+    if (!studentId) {
+      throw new CustomError("Student Fetched sucessfully.", 404);
+    }
 
-  const student = await Student.findById(studentId);
-
-  res.status(200).json({
-    status: "sccuess",
-    message: "Student Fetch Sucessfully",
-    success: true,
-    data: student,
-  });
-};
-
-export const getAllStudent = async (req: Request, res: Response) => {
-  try {
-    const students = await Student.find();
+    const student = await Student.findById(studentId);
 
     res.status(200).json({
       status: "sccuess",
-      message: "Students Fetch Sucessfully",
+      message: "Student Fetch Sucessfully",
       success: true,
-      data: students,
-    });
-  } catch (e) {
-    res.status(400).json({
-      status: "sccuess",
-      message: "Students Fetch Sucessfully",
-      success: false,
+      data: student,
     });
   }
-};
+);
+
+export const getAllStudent = asyncHandler(
+  async (req: Request, res: Response) => {
+    try {
+      const students = await Student.find();
+
+      res.status(200).json({
+        status: "sccuess",
+        message: "Students Fetch Sucessfully",
+        success: true,
+        data: students,
+      });
+    } catch (e) {
+      res.status(400).json({
+        status: "sccuess",
+        message: "Students Fetch Sucessfully",
+        success: false,
+      });
+    }
+  }
+);
