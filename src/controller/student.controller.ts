@@ -113,8 +113,6 @@ export const getAllStudent = async (req: Request, res: Response) => {
   try {
     const students = await Student.find();
 
-    console.log(students);
-
     res.status(200).json({
       status: "sccuess",
       message: "Students Fetch Sucessfully",
