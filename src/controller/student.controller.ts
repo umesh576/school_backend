@@ -108,3 +108,14 @@ export const getStudentById = async (req: Request, res: Response) => {
     data: student,
   });
 };
+
+export const getAllStudent = async (req: Request, res: Response) => {
+  const students = await Student.find();
+
+  res.status(200).json({
+    status: "sccuess",
+    message: "Students Fetch Sucessfully",
+    success: true,
+    data: students,
+  });
+};
