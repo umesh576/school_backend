@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const classSchema = new mongoose.Schema(
   {
     className: {
-      type: [Number, "Classname Must Be number"],
+      type: [String, "Class name must be String"],
     },
     subject: [
       {
