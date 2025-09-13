@@ -114,21 +114,30 @@ export const getStudentById = asyncHandler(
 
 export const getAllStudent = asyncHandler(
   async (req: Request, res: Response) => {
-    try {
-      const students = await Student.find();
+    const { firstName, lastName, role, rollNo } = req.query;
+    const filter: any = {};
 
-      res.status(200).json({
-        status: "sccuess",
-        message: "Students Fetch Sucessfully",
-        success: true,
-        data: students,
-      });
-    } catch (e) {
-      res.status(400).json({
-        status: "sccuess",
-        message: "Students Fetch Sucessfully",
-        success: false,
-      });
+    if (firstName) {
+      filter.firstName = { $regex: firstName, $options: "i" };
     }
+    if (lastName) {
+      filter.lastName = { $regex: lastName, $options: "i" };
+    }
+    if (role) {
+      filter.role = { $regex: role, $options: "i" };
+    }
+
+    if (rollNo) {
+      filter.rollNo = { $regex: rollNo, $options: "i" };
+    }
+
+    const students = await Student.find(filter);
+
+    res.status(200).json({
+      status: "sccuess",
+      message: "Students Fetch Sucessfully",
+      success: true,
+      data: students,
+    });
   }
 );
