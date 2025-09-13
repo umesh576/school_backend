@@ -5,7 +5,12 @@ const classSchema = new mongoose.Schema(
     className: {
       type: [Number, "Classname Must Be number"],
     },
-    subject: {},
+    subject: [
+      {
+        type: [mongoose.Schema.ObjectId, "Type must be object id."],
+        ref: "subject",
+      },
+    ],
   },
   { timestamps: true }
 );
