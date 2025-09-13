@@ -4,6 +4,8 @@ import AdminWork from "./routes/admin.routes";
 import cloudianryWork from "./routes/cloudinary.routes";
 import staffWork from "./routes/staff.routes";
 import studentWork from "./routes/student.routes";
+import classWork from "./routes/class.route";
+import subjectWork from "./routes/subject.route";
 import "dotenv/config";
 import "./config/Cloudinary.config";
 const app = express();
@@ -20,6 +22,8 @@ app.use("/api/admin", AdminWork);
 app.use("/api/cloud", cloudianryWork);
 app.use("/api/staff", staffWork);
 app.use("/api/student", studentWork);
+app.use("/api/class", classWork);
+app.use("/api/class", subjectWork);
 
 // global error
 app.use((err: any, req: Request, res: Response, next: any) => {
