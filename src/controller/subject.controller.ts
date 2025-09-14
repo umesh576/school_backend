@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import { Request, Response } from "express";
 import CustomError from "../middleware/customErrorHandle.middleware";
-import Subject from "../model/subject.model";
+import Subject from "../model/Course.model";
 
 export const addSubject = asyncHandler(async (req: Request, res: Response) => {
   const { subjectName, className, description } = req.body;

@@ -3,8 +3,7 @@ import mongoose from "mongoose";
 const classSchema = new mongoose.Schema(
   {
     className: {
-      type: [String, "Class name must be String"],
-      required: [true, "Class name is required."],
+      type: String,
     },
     subject: [
       {
