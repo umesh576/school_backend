@@ -5,13 +5,13 @@ const classSchema = new mongoose.Schema(
     className: {
       type: String,
     },
-    subject: [
+    subjects: [
       {
         type: [mongoose.Schema.ObjectId, "Type must be object id."],
         ref: "subject",
       },
     ],
-    student: [
+    students: [
       {
         type: mongoose.Schema.ObjectId,
         required: false,

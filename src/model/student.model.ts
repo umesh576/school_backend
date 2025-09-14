@@ -58,6 +58,10 @@ const studentSchema = new mongoose.Schema(
         ref: "studentRecord",
       },
     ],
+    className: {
+      type: mongoose.Schema.ObjectId,
+      ref: "class",
+    },
   },
   { timestamps: true }
 );
