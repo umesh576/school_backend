@@ -30,7 +30,7 @@ const studentSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      minLength: [6, "Password more than 6 character."],
+      minLength: [6, "Password  more than 6 character."],
       maxLength: [100, "Password must be less than 50 character."],
     },
 
